@@ -1,0 +1,300 @@
+|     5 |
++-------+
+1 row in set (0.00 sec)
+
+mysql> select BookID ,count(BookName) AS BOOKid FROM BookInfo GROUP BY BookID;
++--------+--------+
+| BookID | BOOKid |
++--------+--------+
+|      1 |      1 |
+|      2 |      1 |
+|      3 |      1 |
+|      5 |      1 |
+|      6 |      1 |
++--------+--------+
+5 rows in set, 1 warning (0.00 sec)
+
+mysql> ALTER TABLE BookInfo ADD COLUMN PageNo int;
+Query OK, 5 rows affected (0.12 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM BookInfo;
++--------+-----------+--------+---------+--------+
+| BookID | BookName  | Price  | Author  | PageNo |
++--------+-----------+--------+---------+--------+
+|      1 | Maths     | 460.00 | Ashwini |   NULL |
+|      2 | Science   | 560.00 | Ashish  |   NULL |
+|      3 | History   | 780.00 | Shahid  |   NULL |
+|      5 | geography | 420.00 | Russi   |   NULL |
+|      6 | Sundram   |   NULL | Surya   |   NULL |
++--------+-----------+--------+---------+--------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT into BookInfo (Pageno) VALUES (786);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> SELECT * FROM BookInfo;
++--------+-----------+--------+---------+--------+
+| BookID | BookName  | Price  | Author  | PageNo |
++--------+-----------+--------+---------+--------+
+|      1 | Maths     | 460.00 | Ashwini |   NULL |
+|      2 | Science   | 560.00 | Ashish  |   NULL |
+|      3 | History   | 780.00 | Shahid  |   NULL |
+|      5 | geography | 420.00 | Russi   |   NULL |
+|      6 | Sundram   |   NULL | Surya   |   NULL |
+|      7 | NULL      |   NULL | NULL    |    786 |
++--------+-----------+--------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> INSERT into BookInfo (PageNo) VALUES (567) WHERE BookID=1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE BookID=1' at line 1
+mysql> update PageNo FROM BookInfo where BookID=1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM BookInfo where BookID=1' at line 1
+mysql> update BookInfo SET PageNo where BookID=1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where BookID=1' at line 1
+mysql> update BookInfo SET PageNo=786 where BookID=1;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update BookInfo SET PageNo=786 where BookID=2;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update BookInfo SET PageNo=876 where BookID=3;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update BookInfo SET PageNo=677 where BookID=5;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update BookInfo SET PageNo=786 where BookID=6;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update BookInfo SET PageNo=889 where BookID=7;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM BookInfo;
++--------+-----------+--------+---------+--------+
+| BookID | BookName  | Price  | Author  | PageNo |
++--------+-----------+--------+---------+--------+
+|      1 | Maths     | 460.00 | Ashwini |    786 |
+|      2 | Science   | 560.00 | Ashish  |    786 |
+|      3 | History   | 780.00 | Shahid  |    876 |
+|      5 | geography | 420.00 | Russi   |    677 |
+|      6 | Sundram   |   NULL | Surya   |    786 |
+|      7 | NULL      |   NULL | NULL    |    889 |
++--------+-----------+--------+---------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select BookId,COUNT(PageNo) AS PagesCount FROM BookInfo GROUP BY PageNo;
++--------+------------+
+| BookId | PagesCount |
++--------+------------+
+|      5 |          1 |
+|      1 |          3 |
+|      3 |          1 |
+|      7 |          1 |
++--------+------------+
+4 rows in set (0.00 sec)
+
+mysql> create table ProductCategory
+    -> (
+    ->  ProductCategoryID int AUTO_INCREMENT,
+    -> ProductName varchar(30),
+    -> Price decimal(6,2)
+    -> );
+ERROR 1075 (42000): Incorrect table definition; there can be only one auto column and it must be defined as a key
+mysql> create table ProductCategory
+    -> (
+    ->  ProductCategoryID int AUTO_INCREMENT primary key,
+    -> ProductName varchar(30),
+    -> Price decimal(6,2)
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> INSERT INTO ProductCategory (ProductName, Price) VALUES ('Shampoo',85);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> INSERT INTO ProductCategory (ProductName, Price) VALUES ('Shirt',795);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> INSERT INTO ProductCategory (ProductName, Price) VALUES ('Speaker',786);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> INSERT INTO ProductCategory (ProductName, Price) VALUES ('Band',786);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> INSERT INTO ProductCategory (ProductName, Price) VALUES ('Dell',766);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> INSERT INTO ProductCategory (ProductName, Price) VALUES ('Doll',126);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> INSERT INTO ProductCategory (ProductName, Price) VALUES ('Induction',786);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> SELECT BookInfo.PageNo,
+    -> From BookInfo
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'From BookInfo' at line 2
+mysql> SELECT BookInfo.BookID,
+    -> ProductCategory.;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> SELECT B.BookID,P.ProductName AS ProductName,B.BookName AS BookName FROM BookINfo B CROSS JOIN ProductCategory P;
++--------+-------------+-----------+
+| BookID | ProductName | BookName  |
++--------+-------------+-----------+
+|      1 | Shampoo     | Maths     |
+|      2 | Shampoo     | Science   |
+|      3 | Shampoo     | History   |
+|      5 | Shampoo     | geography |
+|      6 | Shampoo     | Sundram   |
+|      7 | Shampoo     | NULL      |
+|      1 | Shirt       | Maths     |
+|      2 | Shirt       | Science   |
+|      3 | Shirt       | History   |
+|      5 | Shirt       | geography |
+|      6 | Shirt       | Sundram   |
+|      7 | Shirt       | NULL      |
+|      1 | Speaker     | Maths     |
+|      2 | Speaker     | Science   |
+|      3 | Speaker     | History   |
+|      5 | Speaker     | geography |
+|      6 | Speaker     | Sundram   |
+|      7 | Speaker     | NULL      |
+|      1 | Band        | Maths     |
+|      2 | Band        | Science   |
+|      3 | Band        | History   |
+|      5 | Band        | geography |
+|      6 | Band        | Sundram   |
+|      7 | Band        | NULL      |
+|      1 | Dell        | Maths     |
+|      2 | Dell        | Science   |
+|      3 | Dell        | History   |
+|      5 | Dell        | geography |
+|      6 | Dell        | Sundram   |
+|      7 | Dell        | NULL      |
+|      1 | Doll        | Maths     |
+|      2 | Doll        | Science   |
+|      3 | Doll        | History   |
+|      5 | Doll        | geography |
+|      6 | Doll        | Sundram   |
+|      7 | Doll        | NULL      |
+|      1 | Induction   | Maths     |
+|      2 | Induction   | Science   |
+|      3 | Induction   | History   |
+|      5 | Induction   | geography |
+|      6 | Induction   | Sundram   |
+|      7 | Induction   | NULL      |
++--------+-------------+-----------+
+42 rows in set (0.00 sec)
+
+mysql> SELECT B.BookID,P.ProductName AS ProductName,B.BookName AS BookName FROM BookINfo B INNER JOIN ProductCategory P;
++--------+-------------+-----------+
+| BookID | ProductName | BookName  |
++--------+-------------+-----------+
+|      1 | Shampoo     | Maths     |
+|      2 | Shampoo     | Science   |
+|      3 | Shampoo     | History   |
+|      5 | Shampoo     | geography |
+|      6 | Shampoo     | Sundram   |
+|      7 | Shampoo     | NULL      |
+|      1 | Shirt       | Maths     |
+|      2 | Shirt       | Science   |
+|      3 | Shirt       | History   |
+|      5 | Shirt       | geography |
+|      6 | Shirt       | Sundram   |
+|      7 | Shirt       | NULL      |
+|      1 | Speaker     | Maths     |
+|      2 | Speaker     | Science   |
+|      3 | Speaker     | History   |
+|      5 | Speaker     | geography |
+|      6 | Speaker     | Sundram   |
+|      7 | Speaker     | NULL      |
+|      1 | Band        | Maths     |
+|      2 | Band        | Science   |
+|      3 | Band        | History   |
+|      5 | Band        | geography |
+|      6 | Band        | Sundram   |
+|      7 | Band        | NULL      |
+|      1 | Dell        | Maths     |
+|      2 | Dell        | Science   |
+|      3 | Dell        | History   |
+|      5 | Dell        | geography |
+|      6 | Dell        | Sundram   |
+|      7 | Dell        | NULL      |
+|      1 | Doll        | Maths     |
+|      2 | Doll        | Science   |
+|      3 | Doll        | History   |
+|      5 | Doll        | geography |
+|      6 | Doll        | Sundram   |
+|      7 | Doll        | NULL      |
+|      1 | Induction   | Maths     |
+|      2 | Induction   | Science   |
+|      3 | Induction   | History   |
+|      5 | Induction   | geography |
+|      6 | Induction   | Sundram   |
+|      7 | Induction   | NULL      |
++--------+-------------+-----------+
+42 rows in set (0.00 sec)
+
+mysql> SELECT *  from BookInfo B INNER JOIN  ProductCategory P ON B.BookId=P.ProductCategoryID;
++--------+-----------+--------+---------+--------+-------------------+-------------+--------+
+| BookID | BookName  | Price  | Author  | PageNo | ProductCategoryID | ProductName | Price  |
++--------+-----------+--------+---------+--------+-------------------+-------------+--------+
+|      1 | Maths     | 460.00 | Ashwini |    786 |                 1 | Shampoo     |  85.00 |
+|      2 | Science   | 560.00 | Ashish  |    786 |                 2 | Shirt       | 795.00 |
+|      3 | History   | 780.00 | Shahid  |    876 |                 3 | Speaker     | 786.00 |
+|      5 | geography | 420.00 | Russi   |    677 |                 5 | Dell        | 766.00 |
+|      6 | Sundram   |   NULL | Surya   |    786 |                 6 | Doll        | 126.00 |
+|      7 | NULL      |   NULL | NULL    |    889 |                 7 | Induction   | 786.00 |
++--------+-----------+--------+---------+--------+-------------------+-------------+--------+
+6 rows in set (0.02 sec)
+
+mysql> select * from ProductCategoryID;
+ERROR 1146 (42S02): Table 'bookdet.productcategoryid' doesn't exist
+mysql> select * from ProductCategory;
++-------------------+-------------+--------+
+| ProductCategoryID | ProductName | Price  |
++-------------------+-------------+--------+
+|                 1 | Shampoo     |  85.00 |
+|                 2 | Shirt       | 795.00 |
+|                 3 | Speaker     | 786.00 |
+|                 4 | Band        | 786.00 |
+|                 5 | Dell        | 766.00 |
+|                 6 | Doll        | 126.00 |
+|                 7 | Induction   | 786.00 |
++-------------------+-------------+--------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT *  from BookInfo B INNER JOIN  ProductCategory P ON B.PageNo=P.Price;
++--------+----------+--------+---------+--------+-------------------+-------------+--------+
+| BookID | BookName | Price  | Author  | PageNo | ProductCategoryID | ProductName | Price  |
++--------+----------+--------+---------+--------+-------------------+-------------+--------+
+|      1 | Maths    | 460.00 | Ashwini |    786 |                 3 | Speaker     | 786.00 |
+|      2 | Science  | 560.00 | Ashish  |    786 |                 3 | Speaker     | 786.00 |
+|      6 | Sundram  |   NULL | Surya   |    786 |                 3 | Speaker     | 786.00 |
+|      1 | Maths    | 460.00 | Ashwini |    786 |                 4 | Band        | 786.00 |
+|      2 | Science  | 560.00 | Ashish  |    786 |                 4 | Band        | 786.00 |
+|      6 | Sundram  |   NULL | Surya   |    786 |                 4 | Band        | 786.00 |
+|      1 | Maths    | 460.00 | Ashwini |    786 |                 7 | Induction   | 786.00 |
+|      2 | Science  | 560.00 | Ashish  |    786 |                 7 | Induction   | 786.00 |
+|      6 | Sundram  |   NULL | Surya   |    786 |                 7 | Induction   | 786.00 |
++--------+----------+--------+---------+--------+-------------------+-------------+--------+
+9 rows in set (0.00 sec)
+
+mysql> select BookInfo.BookName,ProductCategory.ProductCategoryID LEFT JOIN BookInfo ON BookInfo.BookID=ProductCategory.ProductCategoryID ORDER BY ProductCategory.ProductName;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'LEFT JOIN BookInfo ON BookInfo.BookID=ProductCategory.ProductCategoryID ORDER BY' at line 1
+mysql> select BookInfo.BookName,ProductCategory.ProductCategoryID LEFT JOIN BookInfo ON BookInfo.BookID=ProductCategory.ProductCategoryID ORDER BY ProductCategory.ProductName;
